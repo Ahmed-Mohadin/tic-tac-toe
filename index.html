@@ -8,7 +8,51 @@
     <title>Tic Tac Toe</title>
 </head>
 <body>
-
+    <header>
+        <h1 class="title">Tac Tac Toe</h1>
+    </header>
+    <main>
+        <div class="tic-plays">
+            <div class="player p1">
+                <h2>Player X - <span class="p1-score">&#63;</span></h2>
+                <img src="images/player_icon.svg" alt="player_icon">
+            </div>
+            <div class="tic-board">
+                <div class="tic-played">X</div>
+                <div class="tic-played">X</div>
+                <div class="tic-played">X</div>
+                <div class="tic-played">X</div>
+                <div class="tic-played">X</div>
+                <div class="tic-played">X</div>
+                <div class="tic-played">X</div>
+                <div class="tic-played">X</div>
+                <div class="tic-played">X</div>
+            </div>
+            <div class="player p2">
+                <h2>Player O - <span class="p2-score">&#63;</span></h2>
+                <img src="images/player_icon.svg" alt="player_icon">
+            </div>
+        </div>
+    </main>
+    <aside class="not-active">
+        <div class="player">
+            <img id="player-img" src="images/player_icon.svg" alt="">
+            <h2>Player</h2>
+        </div>
+        <h2>Choose your oppenent</h2>
+        <div class="cpu">
+            <img id="ai-img" src="images/ai_icon.svg" alt="">
+            <h2>CPU</h2>
+        </div>
+    </aside>
+    <footer>
+        <p>
+            Built by
+            <a class="footer-link" href="https://github.com/Ahmed-Mohadin/" target="_blank">Ahmed Mohadin</a>
+            |
+            <a class="footer-link" href="https://github.com/Ahmed-Mohadin/tic-tac-toe" target="_blank">Source</a>
+        </p>
+    </footer>
     <script src="scripts/script.js"></script>
 </body>
 </html>
