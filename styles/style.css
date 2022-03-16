@@ -32,6 +32,7 @@ main{
     justify-content: center;
     margin: 0 auto;
     padding: 2rem;
+    text-align: center;
 }
 
 /* .tic-plays */
@@ -64,6 +65,7 @@ main{
     align-items: center;
     justify-content: center;
     padding: 15%;
+    height: 7rem;
     font-size: 4em;
     position: relative;
     transition: all 0.3s ease-in-out;
@@ -101,6 +103,23 @@ main{
     border-right: 0;
 }
 
+/* .b */
+.btn{
+    margin-top: 1rem;
+    padding: 0.4rem 1rem;
+    font-size: 1.1em;
+    border: solid 0.1rem #01BAEF;
+    border-radius: 0.4rem;
+    outline: none;
+    transition: all 0.4s ease-in-out;
+}
+.btn:hover{
+    border-color: #FFF;
+    background-color: #01BAEF;
+    color: #FFF;
+    cursor: pointer;
+}
+
 /* aside */
 aside{
     position: fixed;
@@ -110,7 +129,7 @@ aside{
     transform: translate(-50%, -50%);
     padding: 1rem;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     text-align: center;
     color: #FFF;
