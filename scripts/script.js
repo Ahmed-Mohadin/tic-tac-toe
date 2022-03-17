@@ -13,11 +13,9 @@ const Gameboard = (() => {
     const getBoard = (index) => userBoard[index];
 
     // Reset array
-    const resetBoard = () => {
-        userBoard = new Array(9);
-    }
-
-    // Updates the baord
+    const resetBoard = () => userBoard = new Array(9);
+    
+    // Updates the board
     const updateBoard = () => {
         const boardN = document.querySelectorAll('.tic-played');
         userBoard.forEach((sign, index) => {
@@ -154,7 +152,7 @@ const DisplayController = (() => {
     const ticPlayed = document.querySelectorAll('.tic-played');
     const chooseImg = document.querySelectorAll('aside img');
 
-    // display/not-active aside
+    // Display/not-active aside
     const openAside = () => {
         aside.classList.add('overlay');
         aside.classList.remove('not-active');
@@ -183,8 +181,8 @@ const DisplayController = (() => {
             p2Score.innerText = 0;  
             closeAside();
             switchColor();
-        })
-    })
+        });
+    });
 
     // AiPlay, with setTimeout function
     const aiPlay = () => {
@@ -200,25 +198,27 @@ const DisplayController = (() => {
     // Place sign in desired grid 
     ticPlayed.forEach((tic, index) => {
         tic.addEventListener('click', (e) => {
-            if(e.target.innerText === '' && gameController.getPlayerSign() === 'X' && player2Img.classList.contains('ai-icon')){
-                gameController.startRound(index);
-                aiPlay();
-            }
-            if(e.target.innerText === '' && player2Img.classList.contains('player-icon')){
-                gameController.startRound(index);
+            if(e.target.innerText === ''){
+                if(gameController.getPlayerSign() === 'X' && player2Img.classList.contains('ai-icon')){
+                    gameController.startRound(index);
+                    aiPlay();
+                }
+                if(player2Img.classList.contains('player-icon')){
+                    gameController.startRound(index);
+                }
             }
             Gameboard.updateBoard();
             switchColor();
-        })
-    })
+        });
+    });
     
-    // switch img color between rounds
+    // Switch img color between rounds
     const switchColor = () => {
         if(gameController.getPlayerSign() === 'X'){
             player1Img.classList.add('img-active');
             player2Img.classList.remove('img-active');
         }
-        else if(gameController.getPlayerSign() === 'O'){
+        if(gameController.getPlayerSign() === 'O'){
             player1Img.classList.remove('img-active');
             player2Img.classList.add('img-active');
         }
@@ -236,11 +236,10 @@ const DisplayController = (() => {
     }
 
     // Restarts the game by reloading the page
-    document.querySelector('.restart-game').onclick = function(){
-        window.location.reload();
-    }
+    const restartGame = document.querySelector('.restart-game');
+    restartGame.onclick = () => window.location.reload();
 
-    // pop up, with game result match
+    // Pop up, with game result match
     const gameResult = (message) => {
         openAside();
         setTimeout(function(){
