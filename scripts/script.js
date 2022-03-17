@@ -43,15 +43,100 @@ const Player = (sign) => {
 // Controls the ai/cpu
 const AiLogic = (() => {    
 
-    let possibleMoves = [];
-
-    // places its sign on a random available board
+    // Places its sign on the best available board
     const computerPlay = () => {
-        for(let i = 0; i < Gameboard.userArr().length; i++){
-            if(Gameboard.getBoard(i) == undefined) possibleMoves.push(i);
+        let clone = [...Gameboard.userArr()];
+        return getBestMove(clone);
+    }
+
+    // Checks three in a row
+    const threeInARow = (a, b, c) => {
+        return a == b && b == c && a != undefined;
+    }
+      
+    // Checks the board winner
+    const evaluate = (board) => {
+        let winner = null;
+        
+        // Horizontal
+        if(threeInARow(board[0], board[1], board[2])) winner = board[0];
+        if(threeInARow(board[3], board[4], board[5])) winner = board[3];
+        if(threeInARow(board[6], board[7], board[8])) winner = board[6];
+        
+        // Vertical
+        if(threeInARow(board[0], board[3], board[6])) winner = board[0];
+        if(threeInARow(board[1], board[4], board[7])) winner = board[1];
+        if(threeInARow(board[2], board[5], board[8])) winner = board[2];
+        
+        // Diagonal
+        if(threeInARow(board[0], board[4], board[8])) winner = board[0];
+        if(threeInARow(board[2], board[4], board[6])) winner = board[2];
+        
+        let openSpots = 0;
+        for(let i = 0; i < board.length; i++){
+            if(board[i] == undefined) openSpots++;
         }
-        let randomIndex = Math.floor(Math.random() * possibleMoves.length);
-        return possibleMoves[randomIndex];
+        
+        if(winner == null && openSpots == 0) return 'Draw';
+        else return winner;
+    }
+
+    let scores = {
+        X: -10,
+        O: +10,
+        Draw: 0
+    };
+
+    // Returns the best possible move for the ai
+    const getBestMove = (currentBoard) => {
+        let bestValue = -Infinity;
+        let bestMove = -1;
+
+        for(let i = 0; i < currentBoard.length; i++){
+            if(currentBoard[i] == undefined){
+                currentBoard[i] = 'O';
+                let value = minimax(currentBoard, 0, false);
+                currentBoard[i] = undefined;
+                if(value > bestValue){
+                    bestMove = i;
+                    bestValue = value;
+                }
+            }
+        }
+        return bestMove
+    }
+
+    // Returns the best value for that move 
+    const minimax = (currentBoard, depth, isMax) => {
+
+        let result = evaluate(currentBoard);
+        if(result !== null) {
+            return scores[result];
+        }
+
+        if(isMax){
+            let bestValue = -Infinity;
+            for(let i = 0; i < currentBoard.length; i++){
+                if (currentBoard[i] == undefined){
+                    currentBoard[i] = 'O';
+                    bestValue = Math.max(bestValue, minimax(currentBoard, depth + 1, !isMax));
+                    currentBoard[i] = undefined;
+                }
+            }
+            return bestValue
+        } 
+
+        else{
+            let bestValue = +Infinity;
+            for (let i = 0; i < currentBoard.length; i++){
+                if (currentBoard[i] == undefined){
+                    currentBoard[i] = 'X';
+                    bestValue = Math.min(bestValue, minimax(currentBoard, depth + 1, !isMax));
+                    currentBoard[i] = undefined;
+                }
+            }
+            return bestValue
+        }
     }
     
     return {computerPlay}
